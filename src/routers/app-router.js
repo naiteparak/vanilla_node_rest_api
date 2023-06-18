@@ -9,9 +9,9 @@ class AppRouter {
     if (method === 'POST' && url === '/exports') {
       await appController.convertCsvFiles(req, res);
     } else if (method === 'GET' && url === '/files') {
-      await appController.getCsvFiles(req, res);
+      await appController.getConvertedFiles(req, res);
     } else if (method === 'GET' && url.startsWith('/files/:')) {
-      const filename = url.substring('/files/'.length);
+      await appController.getConvertedFileByName(req, res);
     } else if (method === 'DELETE' && url.startsWith('/files/:')) {
       const filename = url.substring('/files/'.length);
     } else {
