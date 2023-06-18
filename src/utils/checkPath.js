@@ -1,10 +1,10 @@
-import { access, constants } from 'node:fs/promises';
+import { access } from 'node:fs/promises';
 
 export const checkPath = async function (path) {
   try {
     await access(path);
+    return true;
   } catch (err) {
-    console.error(`Cannot access: ${err.path}`);
-    process.exit();
+    return false;
   }
 };

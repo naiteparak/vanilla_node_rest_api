@@ -3,9 +3,8 @@ import 'dotenv/config';
 import { appRouter } from './routers/app-router.js';
 const port = process.env.PORT;
 
-const server = createServer((req, res) => {
-  const { method, url } = req;
-  appRouter.handleRoutes(method, url, req, res);
+const server = createServer(async (req, res) => {
+  await appRouter.handleRoutes(req, res);
 });
 
 server.listen(port, () => {
