@@ -1,0 +1,17 @@
+{
+  "name": "http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/convert-csv-to-json.js",
+  "scripts": {
+    "start": "node src/convert-csv-to-json.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.3.1",
+    "csv-parser": "^3.0.0"
+  }
+}
