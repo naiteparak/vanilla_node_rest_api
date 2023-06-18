@@ -19,7 +19,23 @@ class AppController {
       const result = await appService.convertCsvFiles(directory);
       res
         .writeHead(STATUS_CODES.CREATED, CONTENT_TYPES.APPLICATION_JSON)
-        .end(JSON.stringify({ message: result }));
+        .end(JSON.stringify({ response: result }));
+    } catch (error) {
+      res
+        .writeHead(
+          STATUS_CODES.INTERNAL_SERVER_ERROR,
+          CONTENT_TYPES.APPLICATION_JSON,
+        )
+        .end(JSON.stringify({ error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }));
+    }
+  }
+
+  async getCsvFiles(req, res) {
+    try {
+      const result = await appService.getCsvFiles();
+      res
+        .writeHead(STATUS_CODES.CREATED, CONTENT_TYPES.APPLICATION_JSON)
+        .end(JSON.stringify({ response: result }));
     } catch (error) {
       res
         .writeHead(
