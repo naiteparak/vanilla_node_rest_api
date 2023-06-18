@@ -2,9 +2,9 @@
   "name": "http",
   "version": "1.0.0",
   "description": "",
-  "main": "src/convert-csv-to-json.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node src/convert-csv-to-json.js"
+    "start": "nodemon ./src/app.js"
   },
   "type": "module",
   "keywords": [],
@@ -12,6 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^20.3.1",
-    "csv-parser": "^3.0.0"
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
