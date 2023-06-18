@@ -1,6 +1,7 @@
 import { csvConverter } from '../utils/csv-converter.js';
 import { readdir } from 'node:fs/promises';
-import { createReadStream, createWriteStream } from 'node:fs';
+import { createReadStream } from 'node:fs';
+import { unlink } from 'fs/promises';
 
 class AppService {
   async convertCsvFiles(directory) {
@@ -11,7 +12,7 @@ class AppService {
     return await readdir(`${process.cwd()}/src/converted`);
   }
 
-  async getConvertedFileByPath(filePath) {
+  async getFileByPath(filePath) {
     return new Promise((resolve, reject) => {
       const readStream = createReadStream(filePath);
       let json = '';
@@ -22,6 +23,10 @@ class AppService {
         resolve(JSON.parse(json));
       });
     });
+  }
+
+  async deleteFileByPath(filePath) {
+    await unlink(filePath);
   }
 }
 

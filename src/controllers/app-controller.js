@@ -11,18 +11,18 @@ class AppController {
       const reqBody = await getReqBody(req);
       const directory = reqBody.directory;
       if (!directory) {
-        res
+        return res
           .writeHead(STATUS_CODES.BAD_REQUEST, CONTENT_TYPES.APPLICATION_JSON)
           .end(
             JSON.stringify({ error: ERROR_MESSAGES.DIRECTORY_FIELD_REQUIRED }),
           );
       }
       const message = await appService.convertCsvFiles(directory);
-      res
+      return res
         .writeHead(STATUS_CODES.CREATED, CONTENT_TYPES.APPLICATION_JSON)
         .end(JSON.stringify({ response: message }));
     } catch (error) {
-      res
+      return res
         .writeHead(
           STATUS_CODES.INTERNAL_SERVER_ERROR,
           CONTENT_TYPES.APPLICATION_JSON,
@@ -34,11 +34,11 @@ class AppController {
   async getConvertedFiles(req, res) {
     try {
       const csvFiles = await appService.getConvertedFiles();
-      res
+      return res
         .writeHead(STATUS_CODES.OK, CONTENT_TYPES.APPLICATION_JSON)
         .end(JSON.stringify({ response: csvFiles }));
     } catch (error) {
-      res
+      return res
         .writeHead(
           STATUS_CODES.INTERNAL_SERVER_ERROR,
           CONTENT_TYPES.APPLICATION_JSON,
@@ -52,15 +52,31 @@ class AppController {
 
     const filePath = `${process.cwd()}/src/converted/${fileName}`;
     if (!(await checkPath(filePath))) {
-      res
+      return res
         .writeHead(STATUS_CODES.BAD_REQUEST, CONTENT_TYPES.APPLICATION_JSON)
         .end(JSON.stringify({ response: ERROR_MESSAGES.FILE_DOES_NOT_EXISTS }));
     }
 
-    const json = await appService.getConvertedFileByPath(filePath);
-    res
+    const json = await appService.getFileByPath(filePath);
+    return res
       .writeHead(STATUS_CODES.OK, CONTENT_TYPES.APPLICATION_JSON)
       .end(JSON.stringify({ response: json }));
+  }
+
+  async deleteConvertedFileByName(req, res) {
+    const fileName = req.url.split('/files/:')[1];
+
+    const filePath = `${process.cwd()}/src/converted/${fileName}`;
+    if (!(await checkPath(filePath))) {
+      return res
+        .writeHead(STATUS_CODES.BAD_REQUEST, CONTENT_TYPES.APPLICATION_JSON)
+        .end(JSON.stringify({ response: ERROR_MESSAGES.FILE_DOES_NOT_EXISTS }));
+    }
+
+    await appService.deleteFileByPath(filePath);
+    return res
+      .writeHead(STATUS_CODES.NO_CONTENT, CONTENT_TYPES.APPLICATION_JSON)
+      .end();
   }
 }
 

@@ -7,13 +7,13 @@ class AppRouter {
   async handleRoutes(req, res) {
     const { method, url } = req;
     if (method === 'POST' && url === '/exports') {
-      await appController.convertCsvFiles(req, res);
+      return await appController.convertCsvFiles(req, res);
     } else if (method === 'GET' && url === '/files') {
-      await appController.getConvertedFiles(req, res);
+      return await appController.getConvertedFiles(req, res);
     } else if (method === 'GET' && url.startsWith('/files/:')) {
-      await appController.getConvertedFileByName(req, res);
+      return await appController.getConvertedFileByName(req, res);
     } else if (method === 'DELETE' && url.startsWith('/files/:')) {
-      const filename = url.substring('/files/'.length);
+      return await appController.deleteConvertedFileByName(req, res);
     } else {
       return res
         .writeHead(STATUS_CODES.NOT_FOUND, CONTENT_TYPES.APPLICATION_JSON)
