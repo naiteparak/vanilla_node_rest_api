@@ -1,0 +1,8 @@
+# CSV to JSON Converter - REST API
+The CSV to JSON Converter is a Node.js and TypeScript-based REST API that allows users to convert CSV files to JSON format. The application leverages worker threads to efficiently process multiple CSV files concurrently.
+
+# Features
+- CSV to JSON Conversion: Users can convert CSV files through the API
+- Worker Threads: The application utilizes worker threads to handle multiple file conversions concurrently, ensuring efficient processing.
+- Asynchronous Processing: The API handles file conversions asynchronously, preventing any blocking and enabling simultaneous requests.
+- Error Handling: The API includes robust error handling mechanisms to ensure graceful handling of errors during the conversion process.
